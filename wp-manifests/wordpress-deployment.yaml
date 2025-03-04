@@ -30,7 +30,7 @@ spec:
               value: wordpress
             - name: WORDPRESS_DB_USER
               value: wordpress
-          image: wordpress:latest
+          image: 992382545251.dkr.ecr.us-east-1.amazonaws.com/noad/noad:wordpress-latest
           name: wordpress
           ports:
             - containerPort: 80
