@@ -119,12 +119,4 @@ In your browser:
 - **To view Grafana**: http://host-url/grafana
 
 
-
-## 10. Cleanup
-To delete all resources:
-
-```bash
-kubectl delete namespace [enter your namespace here]
-```
-
 ---
