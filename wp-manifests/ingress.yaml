@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: noad-ingress
+  namespace: noad
+spec:
+  ingressClassName: noad
+  rules:
+  - host: acc7477574b7e42a29e864b92aef9c47-322192913.us-east-1.elb.amazonaws.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: wordpress  
+            port:
+              number: 80
+
