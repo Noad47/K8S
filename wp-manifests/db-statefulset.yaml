@@ -27,7 +27,7 @@ spec:
               value: somewordpress
             - name: MYSQL_USER
               value: wordpress
-          image: mariadb:10.6.4-focal
+          image: 992382545251.dkr.ecr.us-east-1.amazonaws.com/noad/noad:mariadb-10.6.4-focal
           name: db
           ports:
             - containerPort: 3306
