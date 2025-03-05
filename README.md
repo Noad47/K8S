@@ -1,98 +1,154 @@
-# Deploying WordPress on Kubernetes
+להפעיל התראות של דואר תכנית ניצנים - בנתיבי אודי בשולחן העבודה?
+   אישור  לא תודה
 
-This guide provides Kubernetes manifests for setting up a WordPress application alongside a MariaDB database on an AWS EKS cluster.
+5 מתוך 339
+readme‏
+דואר נכנס
+
+neta aviv
+# WordPress Deployment on Kubernetes This repository contains Kubernetes manifests for deploying a WordPress application with a MariaDB database on an AWS EKS c
+יום ג׳, 4 במרץ, 14:01 ‎(לפני 21 שעות)‎
+4
+
+noa david
+helm install [RELEASE_NAME] prometheus-community/kube-prometheus-stack בסוגריים שיבחרו שם ‫בתאריך יום ג׳, 4 במרץ 2025 ב-14:43 מאת ‪noa david‬‏ <‪noa.david@nitza
+יום ג׳, 4 במרץ, 14:43 ‎(לפני 20 שעות)‎
+
+neta aviv
+קבצים מצורפים
+יום ג׳, 4 במרץ, 15:01 ‎(לפני 20 שעות)‎
+אני
+
+
+ קובץ מצורף אחד
+  •  נסרקו על ידי Gmail
+# WordPress Deployment on Kubernetes
+
+This repository contains Kubernetes manifests for deploying a WordPress application with a MariaDB database on an AWS EKS cluster.
 
 ## Prerequisites
-Before proceeding, ensure you have the following installed and configured:
-
+Ensure the following are installed and configured:
 - Kubernetes (Minikube or AWS EKS)
 - `kubectl`
 - `helm`
-- AWS CLI (for AWS EKS users)
+- AWS CLI (if using AWS EKS)
 - Git
 
-## 1. Clone the Repository
-Download the repository to your local environment:
 
-```sh
+## 1. Clone the Repository
+Clone the repository to your local machine:
+
+```bash
 git clone https://github.com/NetaAviv/final-project-eks.git
 cd final-project-eks
 ```
 
-## 2. Set Up Storage Class (If Required)
 
-```sh
-kubectl apply -f storage-class.yaml -n [namespace]
+## 2. Create a storage class if needed
+
+```bash
+kubectl apply -f storage-class.yaml -n [enter your namespace here]
 ```
 
-## 3. Create Persistent Volume Claims (PVCs)
 
-```sh
-kubectl apply -f mysql-pvc-neta.yaml -n [namespace]
-kubectl apply -f wordpress-pvc.yaml -n [namespace]
+## 3. Create PVCs
+
+```bash
+kubectl apply -f mysql-pvc-neta.yaml -n [enter your namespace here]
+kubectl apply -f wordpress-pvc.yaml -n [enter your namespace here]
 ```
 
-## 4. Deploy the Database (MariaDB)
 
-```sh
-kubectl apply -f mysql-statefulset.yaml -n [namespace]
+## 4. Deploy MariaDB
+
+
+
+```bash
+kubectl apply -f mysql-statefulset.yaml -n [enter your namespace here]
 ```
+
+
 
 ## 5. Deploy WordPress
 
-```sh
-kubectl apply -f wordpress-deployment.yaml -n [namespace]
+
+
+```bash
+kubectl apply -f wordpress-deployment.yaml -n [enter your namespace here]
 ```
 
-## 6. Expose the Application
-You have two approaches to expose the application:
 
-### Option 1: Using Ingress (Preferred)
-Ingress makes it easier to access additional services like Grafana via path-based routing.
+## 6. Deploy the Application
 
-```sh
-helm install [ingress-name] ingress-nginx/ingress-nginx --namespace [namespace] --set controller.ingressClassResource.name=[ingress-class] -f values.yaml
-kubectl apply -f wordpress-service.yaml -n [namespace]
-kubectl apply -f ingress.yaml -n [namespace]
+### We have two options:
+ - Ingress
+ - LB
+
+I recommand using ingress so that we could easily access our grafana page in the future using Path-based routing
+
+
+### Ingress= Set Up Ingress
+```bash
+helm install [name of your new ingress] ingress-nginx/ingress-nginx --namespace [enter your namespace here] --set controller.ingressClassResource.name=[name your ingress class] -f values.yaml
+kubectl apply -f wordpress-service.yaml -n [enter your namespace here]
+kubectl apply -f ingress.yaml -n [enter your namespace here]
 ```
-
-### Option 2: Using LoadBalancer
-
-```sh
+### LB
+```bash
 echo "  type: LoadBalancer" >> wordpress-service.yaml
-kubectl apply -f wordpress-service.yaml -n [namespace]
+kubectl apply -f wordpress-service.yaml -n [enter your namespace here]
 ```
-To check the LoadBalancer details:
-
-```sh
+to view the lb: 
+```bash
 kubectl get service | grep wordpress-service
 ```
 
-## 7. Validate the Deployment
-Check the status of your deployed resources:
 
-```sh
-kubectl get pods -n [namespace]
-kubectl get services -n [namespace]
+## 7. Verify Deployment
+
+
+Check the status of your resources:
+
+```bash
+kubectl get pods -n [enter your namespace here]
+kubectl get services -n [enter your namespace here]
 ```
 
-## 8. Install Prometheus & Grafana via Helm
 
-```sh
+## 8. Install helm for grafana and prometheus:
+
+
+```bash
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
-helm install [release-name] prometheus-community/kube-prometheus-stack
+```
+```bash
+helm install [RELEASE_NAME] prometheus-community/kube-prometheus-stack
 ```
 
-## 9. Access WordPress (If Using Ingress)
-To get the external URL:
 
-```sh
-kubectl get ingress -n [namespace]
+## 9. Accessing the WordPress Application- if you used ingress
+
+Retrieve the external URL of your application:
+
+```bash
+kubectl get ingress -n [enter your namespace here]
 ```
-Check the `HOSTS` column to find the application’s URL.
 
-### Open in Your Browser:
-- WordPress: `http://your-host-url/`
-- Grafana: `http://your-host-url/grafana`
+Look for the `HOSTS` column, which will show you a URL
 
+In your browser:
+
+- **To view WordPress**: http://host-url/
+- **To view Grafana**: http://host-url/grafana
+
+
+
+## 10. Cleanup
+To delete all resources:
+
+```bash
+kubectl delete namespace [enter your namespace here]
+```
+
+---
