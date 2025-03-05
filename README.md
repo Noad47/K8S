@@ -1,27 +1,3 @@
-להפעיל התראות של דואר תכנית ניצנים - בנתיבי אודי בשולחן העבודה?
-   אישור  לא תודה
-
-5 מתוך 339
-readme‏
-דואר נכנס
-
-neta aviv
-# WordPress Deployment on Kubernetes This repository contains Kubernetes manifests for deploying a WordPress application with a MariaDB database on an AWS EKS c
-יום ג׳, 4 במרץ, 14:01 ‎(לפני 21 שעות)‎
-4
-
-noa david
-helm install [RELEASE_NAME] prometheus-community/kube-prometheus-stack בסוגריים שיבחרו שם ‫בתאריך יום ג׳, 4 במרץ 2025 ב-14:43 מאת ‪noa david‬‏ <‪noa.david@nitza
-יום ג׳, 4 במרץ, 14:43 ‎(לפני 20 שעות)‎
-
-neta aviv
-קבצים מצורפים
-יום ג׳, 4 במרץ, 15:01 ‎(לפני 20 שעות)‎
-אני
-
-
- קובץ מצורף אחד
-  •  נסרקו על ידי Gmail
 # WordPress Deployment on Kubernetes
 
 This repository contains Kubernetes manifests for deploying a WordPress application with a MariaDB database on an AWS EKS cluster.
