@@ -15,7 +15,7 @@ Ensure the following are installed and configured:
 Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/NetaAviv/final-project-eks.git
+git clone https://github.com/Noad47/K8S.git
 cd final-project-eks
 ```
 
